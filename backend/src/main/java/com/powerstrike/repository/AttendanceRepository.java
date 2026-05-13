@@ -1,0 +1,11 @@
+package com.powerstrike.repository;
+
+import com.powerstrike.model.Attendance;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
+    List<Attendance> findByUserIdOrderByAttendanceDateDesc(Long userId);
+    List<Attendance> findAllByOrderByAttendanceDateDesc();
+}
