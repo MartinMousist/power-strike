@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:10.11
+    container_name: powerstrike-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${DB_NAME:-powerstrike_db}
+      MYSQL_USER: ${DB_USER:-powerstrike}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-powerstrike123}
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: powerstrike-backend
+    restart: unless-stopped
+    ports:
+      - "8090:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://db:3306/${DB_NAME:-powerstrike_db}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-powerstrike}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-powerstrike123}
+      JWT_SECRET: ${JWT_SECRET:-powerstrike-secret-key-2024-muy-larga-y-segura-para-hmac}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    container_name: powerstrike-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
