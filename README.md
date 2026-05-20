@@ -1,7 +1,9 @@
 # Power Strike — Sistema de Gestión de Actividades para Gimnasio
 
 Sistema web para centralizar la gestión de usuarios, actividades y asistencias de un gimnasio.
-Desarrollado como Trabajo de Campo para **Ingeniería de Software II — IUA**.
+Desarrollado como Trabajo de Campo para la materia **Ingeniería de Software II — IUA**.
+El objetivo del sistema es reemplazar la gestión manual de clientes, horarios y asistencias
+con una plataforma web integrada, accesible para administradores, entrenadores y clientes.
 
 **Grupo 2:** Brizuela Mateo · Mousist Martin · Posada Fabricio Nicolás · Ponce Ernesto
 
@@ -16,56 +18,25 @@ Desarrollado como Trabajo de Campo para **Ingeniería de Software II — IUA**.
 | Base de datos | PostgreSQL 16 |
 | Autenticación | JWT (jjwt 0.11.5) + BCrypt |
 | Contenedores | Docker + Docker Compose |
-| Servidor web | Nginx (frontend) |
-| HTTP client | Axios |
+| Servidor web | Nginx (frontend en producción) |
+| Testing | JUnit 5 + Mockito + JaCoCo |
+| Linting | Checkstyle (backend) + ESLint (frontend) |
 
 ---
 
-## Requerimientos funcionales
+## Prerrequisitos
 
-| ID | Descripción |
-|---|---|
-| REQ-F01 | Registrar usuarios con nombre, email y DNI |
-| REQ-F02 | Mostrar listado de usuarios registrados |
-| REQ-F03 | Gestionar actividades (crear, editar, visualizar) con nombre, día, horario y costo |
-| REQ-F04 | Mostrar actividades disponibles para consulta |
-| REQ-F05 | Registrar y mostrar historial de asistencia de usuarios al gimnasio |
+- Java 17
+- Maven 3.8+
+- Node.js 18+
+- Docker y Docker Compose
+- Git
 
 ---
 
-## Estructura del proyecto
+## Cómo levantar el proyecto
 
-```
-power-strike/
-├── backend/
-│   ├── pom.xml
-│   └── src/main/java/com/powerstrike/
-│       ├── controller/       # Endpoints REST (Activity, Attendance, Auth, User)
-│       ├── service/          # Lógica de negocio
-│       ├── model/            # Entidades JPA
-│       ├── repository/       # Repositorios Spring Data
-│       ├── security/         # JWT filter, JwtUtil, UserDetailsService
-│       ├── config/           # SecurityConfig, AppConfig, DataInitializer
-│       ├── dto/              # DTOs de request/response
-│       └── PowerStrikeApplication.java
-├── frontend/
-│   ├── package.json
-│   └── src/
-│       ├── views/            # Login, Dashboard, Users, Activities, Attendance
-│       ├── components/       # Navbar
-│       ├── store/            # auth.js (Pinia)
-│       ├── router/           # index.js
-│       └── api/              # axios.js
-├── docker-compose.yml
-├── .env.example
-└── README.md
-```
-
----
-
-## Levantar el proyecto con Docker Compose
-
-**Prerequisitos:** Docker y Docker Compose instalados.
+### Opción A — Entorno completo con Docker Compose
 
 ```bash
 # 1. Clonar el repositorio
@@ -75,11 +46,9 @@ cd power-strike
 # 2. Crear el archivo de variables de entorno
 cp .env.example .env
 
-# 3. Levantar todos los servicios
+# 3. Levantar todos los servicios (base de datos, backend y frontend)
 docker compose up --build
 ```
-
-Una vez levantado:
 
 | Servicio | URL |
 |---|---|
@@ -87,10 +56,28 @@ Una vez levantado:
 | Backend API | http://localhost:8090/api |
 | Base de datos | localhost:5433 |
 
-Para detener los servicios:
+```bash
+# Detener los servicios
+docker compose down
+```
+
+### Opción B — Modo desarrollo
 
 ```bash
-docker compose down
+# 1. Levantar solo la base de datos
+docker compose up -d db
+
+# 2. Configurar variables de entorno
+cp .env.example .env
+
+# 3. Iniciar el backend
+cd backend
+mvn spring-boot:run
+
+# 4. En otra terminal, iniciar el frontend
+cd frontend
+npm install
+npm run dev
 ```
 
 ---
@@ -102,11 +89,14 @@ cd backend
 mvn test
 ```
 
-Para generar el reporte de cobertura con JaCoCo:
+---
+
+## Generar reporte de cobertura (JaCoCo)
 
 ```bash
-mvn test jacoco:report
-# El reporte queda en: backend/target/site/jacoco/index.html
+cd backend
+mvn verify
+# Reporte generado en: backend/target/site/jacoco/index.html
 ```
 
 ---
@@ -129,6 +119,48 @@ npm run lint
 
 ---
 
+## Requerimientos funcionales implementados
+
+| ID | Descripción |
+|---|---|
+| REQ-F01 | Registrar usuarios con nombre, email y DNI |
+| REQ-F02 | Mostrar listado de usuarios registrados |
+| REQ-F03 | Gestionar actividades (crear, editar, visualizar) con nombre, día, horario y costo |
+| REQ-F04 | Mostrar actividades disponibles para consulta |
+| REQ-F05 | Registrar y mostrar historial de asistencia de usuarios al gimnasio |
+
+---
+
+## Estructura del proyecto
+
+```
+power-strike/
+├── backend/
+│   ├── pom.xml
+│   ├── checkstyle.xml
+│   └── src/main/java/com/powerstrike/
+│       ├── controller/       # Endpoints REST (Activity, Attendance, Auth, User)
+│       ├── service/          # Lógica de negocio
+│       ├── model/            # Entidades JPA
+│       ├── repository/       # Repositorios Spring Data
+│       ├── security/         # JWT filter, JwtUtil, UserDetailsService
+│       ├── config/           # SecurityConfig, AppConfig, DataInitializer
+│       └── dto/              # DTOs de request/response
+├── frontend/
+│   ├── package.json
+│   └── src/
+│       ├── views/            # Login, Dashboard, Users, Activities, Attendance
+│       ├── components/       # Navbar
+│       ├── store/            # auth.js (Pinia)
+│       ├── router/           # index.js
+│       └── api/              # axios.js
+├── docs/                     # Documentacion del proyecto (Plan SQA, metricas)
+├── docker-compose.yml
+└── .env.example
+```
+
+---
+
 ## Variables de entorno
 
 | Variable | Descripción | Default |
@@ -140,6 +172,4 @@ npm run lint
 
 ---
 
-## Repositorio
-
-https://github.com/MartinMousist/power-strike
+Materia: Ingeniería de Software II — IUA | Hito 3 | Entrega: 20/05/2026
