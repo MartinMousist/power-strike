@@ -16,6 +16,7 @@ public class AttendanceController {
 
     private final AttendanceService attendanceService;
 
+    // REQ-F05 — Registrar y mostrar historial de asistencia de usuarios al gimnasio
     @GetMapping
     public ResponseEntity<List<Attendance>> getAllAttendances() {
         return ResponseEntity.ok(attendanceService.getAllAttendances());
@@ -26,6 +27,7 @@ public class AttendanceController {
         return ResponseEntity.ok(attendanceService.getAttendancesByUser(userId));
     }
 
+    // REQ-F05 — Registro de asistencia de un usuario
     @PostMapping
     public ResponseEntity<Attendance> registerAttendance(@RequestBody AttendanceRequest request) {
         return ResponseEntity.ok(attendanceService.registerAttendance(request));

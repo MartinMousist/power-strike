@@ -15,6 +15,7 @@ public class ActivityController {
 
     private final ActivityService activityService;
 
+    // REQ-F04 — Mostrar actividades disponibles para consulta
     @GetMapping
     public ResponseEntity<List<Activity>> getAllActivities() {
         return ResponseEntity.ok(activityService.getAllActivities());
@@ -25,6 +26,7 @@ public class ActivityController {
         return ResponseEntity.ok(activityService.getActivityById(id));
     }
 
+    // REQ-F03 — Gestión de actividades: crear, editar y visualizar con nombre, día, horario y costo
     @PostMapping
     public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
         return ResponseEntity.ok(activityService.createActivity(activity));

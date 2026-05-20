@@ -89,6 +89,7 @@ const filteredAttendances = computed(() => {
   return attendances.value.filter(a => a.user?.id === Number(filterUserId.value))
 })
 
+// REQ-F05 — Registrar y mostrar historial de asistencia de usuarios al gimnasio
 onMounted(async () => {
   const [attRes, usersRes] = await Promise.all([
     api.get('/attendances'),
@@ -104,6 +105,7 @@ function closeModal() {
   formError.value = ''
 }
 
+// REQ-F05 — Registro de asistencia de un usuario
 async function saveAttendance() {
   formError.value = ''
   if (!form.value.userId) {

@@ -91,6 +91,7 @@ const form = ref({ name: '', email: '', dni: '', password: '', role: 'CLIENT' })
 
 onMounted(fetchUsers)
 
+// REQ-F02 — Listado de usuarios registrados
 async function fetchUsers() {
   const res = await api.get('/users')
   users.value = res.data
@@ -115,6 +116,7 @@ function closeModal() {
   editingId.value = null
 }
 
+// REQ-F01 — Registro de usuarios con nombre, email y DNI
 async function saveUser() {
   formError.value = ''
   try {

@@ -77,6 +77,7 @@ const form = ref({ name: '', day: '', schedule: '', monthlyCost: null })
 
 onMounted(fetchActivities)
 
+// REQ-F04 — Mostrar actividades disponibles para consulta
 async function fetchActivities() {
   const res = await api.get('/activities')
   activities.value = res.data
@@ -106,6 +107,7 @@ function closeModal() {
   editingId.value = null
 }
 
+// REQ-F03 — Gestión de actividades: crear, editar y visualizar con nombre, día, horario y costo
 async function saveActivity() {
   formError.value = ''
   try {

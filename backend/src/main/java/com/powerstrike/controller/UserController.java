@@ -15,6 +15,7 @@ public class UserController {
 
     private final UserService userService;
 
+    // REQ-F02 — Listado de usuarios registrados
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
@@ -25,6 +26,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
+    // REQ-F01 — Registro de usuarios con nombre, email y DNI
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return ResponseEntity.ok(userService.createUser(user));
