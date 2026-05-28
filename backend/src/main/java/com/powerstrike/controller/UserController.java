@@ -2,6 +2,7 @@ package com.powerstrike.controller;
 
 import com.powerstrike.model.User;
 import com.powerstrike.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,12 +29,12 @@ public class UserController {
 
     // REQ-F01 — Registro de usuarios con nombre, email y DNI
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         return ResponseEntity.ok(userService.createUser(user));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
         return ResponseEntity.ok(userService.updateUser(id, user));
     }
 
@@ -43,3 +44,4 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 }
+
