@@ -16,10 +16,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ActivityController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -126,5 +130,47 @@ class ActivityControllerTest {
     @Test
     void AC10_todosValidos_devuelve200() throws Exception {
         post200(VALID_NAME, VALID_DAY, VALID_SCHEDULE, VALID_COST);
+    }
+
+    // ═══════════════════════ HAPPY-PATH (Bloque D) ═══════════════════════
+
+    @Test
+    void getAllActivities_devuelve200ConLista() throws Exception {
+        Activity stub = new Activity(1L, VALID_NAME, VALID_DAY, VALID_SCHEDULE, VALID_COST, true);
+        when(activityService.getAllActivities()).thenReturn(List.of(stub));
+
+        mockMvc.perform(get("/api/activities"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value(VALID_NAME));
+    }
+
+    @Test
+    void getActivityById_devuelve200() throws Exception {
+        Activity stub = new Activity(1L, VALID_NAME, VALID_DAY, VALID_SCHEDULE, VALID_COST, true);
+        when(activityService.getActivityById(1L)).thenReturn(stub);
+
+        mockMvc.perform(get("/api/activities/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value(VALID_NAME));
+    }
+
+    @Test
+    void updateActivity_bodyValido_devuelve200() throws Exception {
+        Activity stub = new Activity(1L, VALID_NAME, VALID_DAY, VALID_SCHEDULE, VALID_COST, true);
+        when(activityService.updateActivity(eq(1L), any())).thenReturn(stub);
+
+        mockMvc.perform(put("/api/activities/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json(VALID_NAME, VALID_DAY, VALID_SCHEDULE, VALID_COST, true)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value(VALID_NAME));
+    }
+
+    @Test
+    void deleteActivity_devuelve204() throws Exception {
+        doNothing().when(activityService).deleteActivity(1L);
+
+        mockMvc.perform(delete("/api/activities/1"))
+                .andExpect(status().isNoContent());
     }
 }

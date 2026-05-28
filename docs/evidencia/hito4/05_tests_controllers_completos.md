@@ -32,5 +32,22 @@ UserServiceTest:           8 tests ✓
 TOTAL:                    64 tests, 0 failures — BUILD SUCCESS
 ```
 
-_(Este archivo se actualizará al completar el Bloque D con happy-path de
-ActivityController, AttendanceController y AuthController)_
+## Total acumulado hasta Bloque D (FINAL)
+
+```
+AuthControllerTest:        1 test  ✓  (happy-path login)
+UserControllerTest:       27 tests ✓  (23 validación + 4 happy-path)
+ActivityControllerTest:   14 tests ✓  (10 validación + 4 happy-path GET/PUT/DELETE)
+AttendanceControllerTest:  8 tests ✓  (6 validación + 2 happy-path GET)
+ActivityServiceTest:       7 tests ✓
+AttendanceServiceTest:     6 tests ✓
+UserServiceTest:           8 tests ✓
+─────────────────────────────────────
+TOTAL:                    71 tests, 0 failures — BUILD SUCCESS
+```
+
+### AuthController — decisión
+
+AuthController tiene dependencias de `AuthenticationManager` y `UserRepository`
+(JPA, no disponible en WebMvcTest). Se mockearon con `@MockBean`. El test de
+happy-path pasó sin problemas con una sola iteración.

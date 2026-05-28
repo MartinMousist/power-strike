@@ -17,11 +17,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(AttendanceController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -103,5 +105,25 @@ class AttendanceControllerTest {
     @Test
     void AT06_notesVacio_devuelve200() throws Exception {
         post200(1L, "");
+    }
+
+    // ═══════════════════════ HAPPY-PATH (Bloque D) ═══════════════════════
+
+    @Test
+    void getAllAttendances_devuelve200ConLista() throws Exception {
+        Attendance stub = new Attendance();
+        stub.setAttendanceDate(LocalDateTime.now());
+        when(attendanceService.getAllAttendances()).thenReturn(List.of(stub));
+
+        mockMvc.perform(get("/api/attendances"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void getAttendancesByUser_devuelve200ConLista() throws Exception {
+        when(attendanceService.getAttendancesByUser(eq(1L))).thenReturn(List.of());
+
+        mockMvc.perform(get("/api/attendances/user/1"))
+                .andExpect(status().isOk());
     }
 }
