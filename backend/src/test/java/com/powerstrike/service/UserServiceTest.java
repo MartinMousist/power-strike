@@ -120,6 +120,18 @@ class UserServiceTest {
     }
 
     @Test
+    void updateUser_cuandoPasswordEsBlank_noReencodea() {
+        User datosActualizados = new User(null, "Juan Actualizado", "juan@email.com", "12345678", "", "ADMIN", true);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(usuarioAdmin));
+        when(userRepository.save(usuarioAdmin)).thenReturn(usuarioAdmin);
+
+        userService.updateUser(1L, datosActualizados);
+
+        verify(passwordEncoder, never()).encode(any());
+        verify(userRepository, times(1)).save(usuarioAdmin);
+    }
+
+    @Test
     void updateUser_cuandoIdNoExiste_lanzaRuntimeException() {
         User datosActualizados = new User(null, "X", "x@email.com", "00000000", null, "CLIENT", true);
         when(userRepository.findById(99L)).thenReturn(Optional.empty());
