@@ -17,10 +17,14 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -217,5 +221,47 @@ class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json(VALID_NAME, VALID_EMAIL, VALID_DNI, VALID_PASSWORD, VALID_ROLE)))
                 .andExpect(status().isInternalServerError());
+    }
+
+    // ═══════════════════════ ENDPOINTS RESTANTES ═══════════════════════
+
+    @Test
+    void getAllUsers_devuelve200ConLista() throws Exception {
+        User u1 = new User(1L, VALID_NAME, VALID_EMAIL, VALID_DNI, VALID_PASSWORD, VALID_ROLE, true);
+        when(userService.getAllUsers()).thenReturn(List.of(u1));
+
+        mockMvc.perform(get("/api/users"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].email").value(VALID_EMAIL));
+    }
+
+    @Test
+    void getUserById_devuelve200ConUsuario() throws Exception {
+        User u = new User(1L, VALID_NAME, VALID_EMAIL, VALID_DNI, VALID_PASSWORD, VALID_ROLE, true);
+        when(userService.getUserById(1L)).thenReturn(u);
+
+        mockMvc.perform(get("/api/users/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email").value(VALID_EMAIL));
+    }
+
+    @Test
+    void updateUser_bodyValido_devuelve200() throws Exception {
+        User u = new User(1L, VALID_NAME, VALID_EMAIL, VALID_DNI, VALID_PASSWORD, VALID_ROLE, true);
+        when(userService.updateUser(eq(1L), any())).thenReturn(u);
+
+        mockMvc.perform(put("/api/users/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json(VALID_NAME, VALID_EMAIL, VALID_DNI, VALID_PASSWORD, VALID_ROLE)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email").value(VALID_EMAIL));
+    }
+
+    @Test
+    void deleteUser_devuelve204() throws Exception {
+        doNothing().when(userService).deleteUser(1L);
+
+        mockMvc.perform(delete("/api/users/1"))
+                .andExpect(status().isNoContent());
     }
 }
