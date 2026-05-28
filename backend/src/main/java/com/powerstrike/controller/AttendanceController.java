@@ -3,6 +3,7 @@ package com.powerstrike.controller;
 import com.powerstrike.dto.AttendanceRequest;
 import com.powerstrike.model.Attendance;
 import com.powerstrike.service.AttendanceService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class AttendanceController {
 
     // REQ-F05 — Registro de asistencia de un usuario
     @PostMapping
-    public ResponseEntity<Attendance> registerAttendance(@RequestBody AttendanceRequest request) {
+    public ResponseEntity<Attendance> registerAttendance(@Valid @RequestBody AttendanceRequest request) {
         return ResponseEntity.ok(attendanceService.registerAttendance(request));
     }
 }
