@@ -2,6 +2,7 @@ package com.powerstrike.controller;
 
 import com.powerstrike.model.Activity;
 import com.powerstrike.service.ActivityService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,12 +29,12 @@ public class ActivityController {
 
     // REQ-F03 — Gestión de actividades: crear, editar y visualizar con nombre, día, horario y costo
     @PostMapping
-    public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
+    public ResponseEntity<Activity> createActivity(@Valid @RequestBody Activity activity) {
         return ResponseEntity.ok(activityService.createActivity(activity));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
+    public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @Valid @RequestBody Activity activity) {
         return ResponseEntity.ok(activityService.updateActivity(id, activity));
     }
 
