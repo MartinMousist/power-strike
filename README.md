@@ -7,6 +7,8 @@ con una plataforma web integrada, accesible para administradores, entrenadores y
 
 **Grupo 2:** Brizuela Mateo · Mousist Martin · Posada Fabricio Nicolás · Ponce Ernesto
 
+[![CI — Tests + Cobertura](https://github.com/MartinMousist/power-strike/actions/workflows/ci.yml/badge.svg)](https://github.com/MartinMousist/power-strike/actions/workflows/ci.yml)
+
 ---
 
 ## Stack tecnológico
@@ -119,6 +121,27 @@ npm run lint
 
 ---
 
+## Calidad y Aseguramiento (Hito 4)
+
+El backend cuenta con una suite de pruebas automatizadas y verificación de calidad continua.
+
+| Aspecto | Detalle |
+|---|---|
+| Tests automatizados | **72 tests** (JUnit 5 + Mockito), 100% en verde |
+| Caja negra | 50 tests de capa web (controllers) vía MockMvc, basados en la especificación |
+| Caja blanca | 22 tests de capa de servicio que recorren la lógica interna (cobertura de ramas) |
+| Técnicas aplicadas | Partición de equivalencia, valores límite, tabla de decisión, máquina de estados |
+| Cobertura (JaCoCo) | 100% en módulos principales (controller, service, model) |
+| Complejidad ciclomática | CC ≤ 10 en todos los métodos (PMD, 0 violaciones) |
+| TDD | 2 ciclos Red-Green documentados (Activity y Attendance) |
+| Defectos | 6 documentados como [Issues](https://github.com/MartinMousist/power-strike/issues) (severidad + prioridad + trazabilidad) |
+| Integración continua | Pipeline de GitHub Actions: tests + cobertura en cada push |
+
+La documentación completa del Hito 4 (plan de pruebas, casos, reporte de defectos, FMEA y
+máquina de estados) está en [`docs/Hito_4_PowerStrike.docx`](docs/Hito_4_PowerStrike.docx).
+
+---
+
 ## Requerimientos funcionales implementados
 
 | ID | Descripción |
@@ -154,7 +177,9 @@ power-strike/
 │       ├── store/            # auth.js (Pinia)
 │       ├── router/           # index.js
 │       └── api/              # axios.js
-├── docs/                     # Documentacion del proyecto (Plan SQA, metricas)
+├── docs/                     # Plan SQA, métricas, informe Hito 4, presentación
+│   └── evidencia/            # Evidencia de ejecución (tests, JaCoCo, PMD, TDD)
+├── .github/workflows/        # ci.yml — pipeline de Integración Continua
 ├── docker-compose.yml
 └── .env.example
 ```
@@ -172,4 +197,4 @@ power-strike/
 
 ---
 
-Materia: Ingeniería de Software II — IUA | Hito 3 | Entrega: 20/05/2026
+Materia: Ingeniería de Software II — IUA | Hito 4 | Entrega: 03/06/2026
