@@ -154,6 +154,34 @@ máquina de estados) está en [`docs/Hito_4_PowerStrike.docx`](docs/Hito_4_Power
 
 ---
 
+## Decisiones de diseño
+
+| Decisión | Por qué |
+|---|---|
+| **Arquitectura en capas** (controller → service → repository) | Separa responsabilidades; permite testear la lógica de negocio aislada con Mockito. |
+| **Autenticación con JWT** (sin estado) | Escalable y simple para una SPA; el token viaja en el header `Authorization`. |
+| **Validación con Bean Validation** (`@Valid`, `@Size`, `@Pattern`, `@Positive`) en los modelos/DTO | Centraliza las reglas; el `@Valid` en el controller bloquea datos inválidos antes de la capa de servicio. |
+| **`GlobalExceptionHandler`** | Traduce errores a códigos HTTP coherentes (400 validación, 409 conflicto, 500 runtime) en un solo lugar. |
+| **Tests sobre slice web** (`@WebMvcTest` + MockMvc) y **services con Mockito** | Tests rápidos (sin DB) que mezclan caja negra (HTTP) y caja blanca (lógica). |
+| **JaCoCo + Checkstyle + PMD + ESLint en CI** | Calidad medible y automática en cada push (GitHub Actions). |
+| **Frontend Vue 3 + Pinia + Vue Router** | SPA reactiva; Pinia para el estado de auth, Router para la navegación por pantallas. |
+
+Decisiones puntuales registradas también en el informe (`docs/Hito_4_PowerStrike.docx`).
+
+## Documentación del proyecto (Hito 5)
+
+| Documento | Contenido |
+|---|---|
+| [`docs/plan_sqa.md`](docs/plan_sqa.md) | Plan SQA actualizado con métricas finales |
+| [`docs/hito5/RTM.md`](docs/hito5/RTM.md) | Matriz de trazabilidad requerimiento → código → test |
+| [`docs/hito5/metricas-finales.md`](docs/hito5/metricas-finales.md) | LOC, CC, MI, cobertura, defectos/KLOC |
+| [`docs/hito5/plan-pruebas-defectos.md`](docs/hito5/plan-pruebas-defectos.md) | Plan de pruebas + reporte de defectos |
+| [`docs/hito5/analisis-heuristico.md`](docs/hito5/analisis-heuristico.md) | 10 heurísticas de Nielsen aplicadas |
+| [`docs/hito5/reflexion-final.md`](docs/hito5/reflexion-final.md) | Reflexión final del equipo |
+| [`docs/Hito_4_PowerStrike.docx`](docs/Hito_4_PowerStrike.docx) | Informe completo de testing (Hito 4) |
+
+---
+
 ## Estructura del proyecto
 
 ```
