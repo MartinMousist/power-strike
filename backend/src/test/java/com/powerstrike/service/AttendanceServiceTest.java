@@ -1,6 +1,7 @@
 package com.powerstrike.service;
 
 import com.powerstrike.dto.AttendanceRequest;
+import com.powerstrike.exception.NotFoundException;
 import com.powerstrike.model.Attendance;
 import com.powerstrike.model.User;
 import com.powerstrike.repository.AttendanceRepository;
@@ -140,5 +141,17 @@ class AttendanceServiceTest {
         assertEquals("Usuario no encontrado", ex.getMessage());
         verify(userRepository, times(1)).findById(99L);
         verify(attendanceRepository, never()).save(any());
+    }
+
+    // DEF-EXP-01 — usuario inexistente debe dar 404 (NotFoundException), no 500
+    @Test
+    void registerAttendance_usuarioNoExiste_lanzaNotFound() {
+        AttendanceRequest request = new AttendanceRequest();
+        request.setUserId(99L);
+
+        when(userRepository.findById(99L)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class,
+                () -> attendanceService.registerAttendance(request));
     }
 }
