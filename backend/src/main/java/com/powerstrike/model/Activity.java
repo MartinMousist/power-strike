@@ -3,6 +3,7 @@ package com.powerstrike.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,8 @@ public class Activity {
     private String name;
 
     @NotBlank(message = "El día no puede estar vacío")
+    @Pattern(regexp = "^(Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo)$",
+             message = "El día debe ser uno de: Lunes a Domingo")
     @Column(nullable = false)
     private String day;
 
