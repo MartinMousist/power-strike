@@ -1,6 +1,7 @@
 package com.powerstrike.service;
 
 import com.powerstrike.dto.AttendanceRequest;
+import com.powerstrike.exception.NotFoundException;
 import com.powerstrike.model.Attendance;
 import com.powerstrike.model.User;
 import com.powerstrike.repository.AttendanceRepository;
@@ -28,7 +29,7 @@ public class AttendanceService {
 
     public Attendance registerAttendance(AttendanceRequest request) {
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
 
         Attendance attendance = new Attendance();
         attendance.setUser(user);
