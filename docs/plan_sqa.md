@@ -1,17 +1,17 @@
 # Plan SQA — Power Strike
 
-**Trabajo de Campo · Ingeniería de Software II · Grupo 2**
-Versión: Hito 5 (cierre) — actualizado 06/06/2026. *(Base: Plan SQA del Hito 3, actualizado en cada hito.)*
+Trabajo de Campo · Ingeniería de Software II · Grupo 2
+Versión: Hito 5 (cierre) — actualizado 06/06/2026. (Base: Plan SQA del Hito 3, actualizado en cada hito.)
 
 ## 1. Datos del proyecto
-- **Proyecto:** Power Strike — sistema de gestión de gimnasio.
-- **Repositorio:** https://github.com/MartinMousist/power-strike
-- **Stack:** Java 17 + Spring Boot 3.2 (backend) · Vue 3 + Vite + Pinia (frontend) · PostgreSQL · Docker.
+- Proyecto: Power Strike — sistema de gestión de gimnasio.
+- Repositorio: https://github.com/MartinMousist/power-strike
+- Stack: Java 17 + Spring Boot 3.2 (backend) · Vue 3 + Vite + Pinia (frontend) · PostgreSQL · Docker.
 
 ## 2. Propósito del plan
-Asegurar la calidad del sistema Power Strike garantizando un software **funcional, mantenible y
-verificable**. Se busca reducir errores mediante revisiones de código, testing continuo y métricas de
-calidad, manteniendo **trazabilidad** entre requerimientos, implementación y pruebas, y mitigando
+Asegurar la calidad del sistema Power Strike garantizando un software funcional, mantenible y
+verificable. Se busca reducir errores mediante revisiones de código, testing continuo y métricas de
+calidad, manteniendo trazabilidad entre requerimientos, implementación y pruebas, y mitigando
 riesgos de fallos funcionales y baja cobertura.
 
 ## 3. Roles del equipo
@@ -23,29 +23,29 @@ riesgos de fallos funcionales y baja cobertura.
 | Fabricio Posada | Documentación / FMEA |
 
 ## 4. Estándares y convenciones
-- **Commits:** Conventional Commits (`feat`, `fix`, `test`, `docs`, `chore`).
-- **Trazabilidad:** cada test referencia su caso de diseño (`CP-`, `AC-`, `AT-`, `EX-`); ver `docs/hito5/RTM.md`.
-- **Documentación inline:** clases y métodos no triviales documentados; TODOs con autor y fecha.
-- **Estilo:** Checkstyle (Java) y ESLint (Vue/TS); sin secretos hardcodeados.
+- Commits: Conventional Commits (`feat`, `fix`, `test`, `docs`, `chore`).
+- Trazabilidad: cada test referencia su caso de diseño (`CP-`, `AC-`, `AT-`, `EX-`); ver `docs/hito5/RTM.md`.
+- Documentación inline: clases y métodos no triviales documentados; TODOs con autor y fecha.
+- Estilo: Checkstyle (Java) y ESLint (Vue/TS); sin secretos hardcodeados.
 
 ## 5. Estrategia de revisiones (checklist antes de aprobar un PR)
-- [x] El código compila / corre sin errores
-- [x] El linter no reporta errores críticos
-- [x] Los tests pasan (CI en verde)
-- [x] Hay tests para el código nuevo
-- [x] Nombres claros, sin código comentado sin razón, sin secretos hardcodeados
-- [x] Trazabilidad actualizada
-- [x] No se mergea con issues **críticos** abiertos
+- El código compila / corre sin errores
+- El linter no reporta errores críticos
+- Los tests pasan (CI en verde)
+- Hay tests para el código nuevo
+- Nombres claros, sin código comentado sin razón, sin secretos hardcodeados
+- Trazabilidad actualizada
+- No se mergea con issues críticos abiertos
 
-## 6. Métricas a monitorear y umbrales — **valores finales**
+## 6. Métricas a monitorear y umbrales (valores finales)
 | Métrica | Umbral | Valor final | ¿Cumple? |
 |---|---|---|:---:|
-| Cobertura en módulos principales | ≥ 60 % | **100 %** | ✅ |
+| Cobertura en módulos principales | ≥ 60 % | 100 % | Sí |
 | Cobertura global | informativa | 53,0 % | — |
-| Complejidad ciclomática (CC) | ≤ 10 por método | 0 violaciones (máx 3) | ✅ |
-| Maintainability Index (MI) | alto | ≈ 85 (estimado) | ✅ |
-| Tests automatizados en verde | 100 % | 72/72 | ✅ |
-| Defectos críticos abiertos al mergear | 0 | 0 | ✅ |
+| Complejidad ciclomática (CC) | ≤ 10 por método | 0 violaciones (máx 3) | Sí |
+| Maintainability Index (MI) | alto | ≈ 85 (estimado) | Sí |
+| Tests automatizados en verde | 100 % | 77/77 | Sí |
+| Defectos críticos abiertos al mergear | 0 | 0 | Sí |
 
 Detalle: `docs/hito5/metricas-finales.md`.
 
@@ -64,24 +64,24 @@ Detalle: `docs/hito5/metricas-finales.md`.
 - **Por hito:** revisión de métricas (LOC, CC, MI, cobertura, densidad de defectos) y actualización de este plan.
 
 ## 9. Gestión de defectos
-- Todo defecto se carga como **Issue** con título, descripción, pasos, **severidad** (QA) y **prioridad** (PO).
-- Severidades: 🔴 Crítico / 🟡 Mayor / 🔵 Menor / ⚪ Cosmético.
-- Antes de cerrar un issue se escribe el **test que verifica el fix**; no se mergea con críticos abiertos.
-- Estado actual: 12 defectos detectados, 5 cerrados, 7 abiertos (ver `docs/hito5/plan-pruebas-defectos.md`).
+- Todo defecto se carga como Issue con título, descripción, pasos, severidad (QA) y prioridad (PO).
+- Severidades: Crítico / Mayor / Menor / Cosmético.
+- Antes de cerrar un issue se escribe el test que verifica el fix; no se mergea con críticos abiertos.
+- Estado actual: 12 defectos detectados, 9 cerrados, 3 abiertos (ver `docs/hito5/plan-pruebas-defectos.md`).
 
 ## 10. Criterios de aceptación para la entrega final (Hito 5)
-- [x] Repositorio público que levanta sin errores + CI en verde.
-- [x] Cobertura ≥ 60 % en módulos principales.
-- [x] Suite de tests 100 % en verde.
-- [x] RTM, métricas finales y reporte de defectos documentados en el repo.
-- [x] Análisis heurístico (10 heurísticas de Nielsen).
-- [ ] Wireframes/mockups en Figma (3 pantallas).
-- [ ] Defensa oral ensayada.
+- Repositorio público que levanta sin errores + CI en verde.
+- Cobertura ≥ 60 % en módulos principales.
+- Suite de tests 100 % en verde.
+- RTM, métricas finales y reporte de defectos documentados en el repo.
+- Análisis heurístico (10 heurísticas de Nielsen).
+- Wireframes/mockups en Figma (3 pantallas) — pendiente.
+- Defensa oral ensayada — pendiente.
 
 ## 11. Riesgos y mitigaciones
 | Riesgo | Prob. | Impacto | Mitigación |
 |---|---|---|---|
-| Defecto crítico de RBAC (DEF-EXP-04) sin corregir | Media | Alto | Priorizar `@PreAuthorize` antes de la defensa |
+| Defecto crítico de RBAC (DEF-EXP-04) | — | Alto | Corregido en Hito 5 con `@PreAuthorize` y test de seguridad |
 | Baja cobertura en seguridad/frontend | Alta | Medio | Documentar el alcance; planificar tests en próximos avances |
 | Disponibilidad del equipo en semana de entrega | Media | Medio | Repartir secciones de la defensa; ensayo previo |
 | Dependencia de un solo integrante para el deploy | Baja | Medio | Documentar el `docker compose up` en el README |
@@ -91,5 +91,5 @@ Detalle: `docs/hito5/metricas-finales.md`.
 |---|---|
 | Hito 3 (20/05) | Plan SQA + métricas iniciales |
 | Hito 4 (03/06) | Plan de pruebas, 72 tests, CI, FMEA, reporte de defectos |
-| Sem 6 (06–16/06) | RTM, métricas finales, heurístico, wireframes, ensayo de defensa |
-| 16/06 (19:00) | **Entrega final + defensa oral** |
+| Sem 6 (06–16/06) | RTM, métricas finales, heurístico, corrección de defectos (77 tests), wireframes, ensayo de defensa |
+| 16/06 (19:00) | Entrega final + defensa oral |
