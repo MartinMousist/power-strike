@@ -1,6 +1,7 @@
 package com.powerstrike.service;
 
 import com.powerstrike.dto.AttendanceRequest;
+import com.powerstrike.exception.ConflictException;
 import com.powerstrike.exception.NotFoundException;
 import com.powerstrike.model.Attendance;
 import com.powerstrike.model.User;
@@ -153,5 +154,20 @@ class AttendanceServiceTest {
 
         assertThrows(NotFoundException.class,
                 () -> attendanceService.registerAttendance(request));
+    }
+
+    // DEF-EXP-02 — no se permite registrar dos asistencias del mismo usuario el mismo día
+    @Test
+    void registerAttendance_duplicadoMismoDia_lanzaConflict() {
+        AttendanceRequest request = new AttendanceRequest();
+        request.setUserId(1L);
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(usuario));
+        lenient().when(attendanceRepository.existsByUserIdAndAttendanceDateAfter(eq(1L), any()))
+                .thenReturn(true);
+
+        assertThrows(ConflictException.class,
+                () -> attendanceService.registerAttendance(request));
+        verify(attendanceRepository, never()).save(any());
     }
 }
