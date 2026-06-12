@@ -127,6 +127,12 @@ class ActivityControllerTest {
         post400(VALID_NAME, VALID_DAY, "", VALID_COST);
     }
 
+    // DEF-EXP-06 — el día debe ser uno de los 7 válidos (no cualquier string)
+    @Test
+    void AC11_diaInvalido_devuelve400() throws Exception {
+        post400(VALID_NAME, "CualquierDia", VALID_SCHEDULE, VALID_COST);
+    }
+
     @Test
     void AC10_todosValidos_devuelve200() throws Exception {
         post200(VALID_NAME, VALID_DAY, VALID_SCHEDULE, VALID_COST);
