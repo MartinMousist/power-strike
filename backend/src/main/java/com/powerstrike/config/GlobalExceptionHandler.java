@@ -1,5 +1,6 @@
 package com.powerstrike.config;
 
+import com.powerstrike.exception.ConflictException;
 import com.powerstrike.exception.NotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,13 @@ public class GlobalExceptionHandler {
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", message);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<Map<String, Object>> handleConflict(ConflictException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage() != null ? ex.getMessage() : "Conflicto de estado");
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 

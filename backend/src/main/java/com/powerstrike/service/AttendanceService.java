@@ -1,6 +1,7 @@
 package com.powerstrike.service;
 
 import com.powerstrike.dto.AttendanceRequest;
+import com.powerstrike.exception.ConflictException;
 import com.powerstrike.exception.NotFoundException;
 import com.powerstrike.model.Attendance;
 import com.powerstrike.model.User;
@@ -9,6 +10,7 @@ import com.powerstrike.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,6 +32,12 @@ public class AttendanceService {
     public Attendance registerAttendance(AttendanceRequest request) {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
+
+        // DEF-EXP-02: no permitir dos asistencias del mismo usuario el mismo día
+        LocalDateTime inicioDelDia = LocalDate.now().atStartOfDay();
+        if (attendanceRepository.existsByUserIdAndAttendanceDateAfter(request.getUserId(), inicioDelDia)) {
+            throw new ConflictException("El usuario ya registró asistencia hoy.");
+        }
 
         Attendance attendance = new Attendance();
         attendance.setUser(user);
