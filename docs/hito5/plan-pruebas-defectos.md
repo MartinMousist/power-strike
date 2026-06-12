@@ -42,26 +42,31 @@ máquina de estados (sobre la entidad Asistencia).
 
 | ID | Descripción | Severidad | Prioridad | Estado |
 |----|-------------|:---:|:---:|:---:|
-| DEF-EXP-01 | `userId` inexistente devuelve 500 en vez de 404 | Menor | Media | Abierto |
-| DEF-EXP-02 | Se permiten asistencias duplicadas sin restricción | Mayor | Alta | Abierto |
+| DEF-EXP-01 | `userId` inexistente devuelve 500 en vez de 404 | Menor | Media | **Corregido** (Hito 5, TDD) |
+| DEF-EXP-02 | Se permiten asistencias duplicadas sin restricción | Mayor | Alta | **Corregido** (Hito 5, TDD) |
 | DEF-EXP-03 | No se puede editar usuario sin cambiar la contraseña | Mayor | Alta | Abierto |
 | DEF-EXP-04 | **Sin control de roles: CLIENT accede a todas las rutas** | Crítica | Alta | Abierto |
 | DEF-EXP-05 | Mensaje incorrecto al eliminar usuario con asistencias | Menor | Baja | Abierto |
-| DEF-EXP-06 | Día/horario de actividad sin validación de formato en backend | Menor | Baja | Abierto |
+| DEF-EXP-06 | Día de actividad sin validación de formato en backend | Menor | Baja | **Corregido** (Hito 5, TDD) |
 
 ### 3.3 Resumen
 
 | | Cantidad |
 |---|:---:|
 | Defectos totales detectados | **12** |
-| Corregidos / cerrados | 5 |
-| Abiertos (para próximos avances) | 7 |
+| Corregidos / cerrados | **8** (incl. 3 cerrados en Hito 5 con TDD: DEF-EXP-01/02/06) |
+| Abiertos (para próximos avances) | 4 |
 | Densidad | ~17 defectos/KLOC (backend) — refleja testing exhaustivo |
 
 > Todos los defectos están además cargados como **Issues** en el repositorio
 > (https://github.com/MartinMousist/power-strike/issues) con su severidad, prioridad y trazabilidad.
 
-## 4. Pendientes priorizados para el cierre
+## 4. Corregidos en el Hito 5 (con TDD, ciclo Red→Green visible en el historial)
+- **DEF-EXP-01:** `NotFoundException` → 404 para usuario inexistente.
+- **DEF-EXP-02:** rechazo de asistencia duplicada el mismo día → 409.
+- **DEF-EXP-06:** validación `@Pattern` del día de la actividad → 400 si es inválido.
+
+## 5. Pendientes priorizados para el cierre
 1. **DEF-EXP-04** (crítico): implementar RBAC real (`.hasRole()` / `@PreAuthorize`).
-2. **DEF-EXP-02** (mayor): evitar asistencias duplicadas (validar en `AttendanceService`).
-3. **DEF-EXP-03** (mayor): permitir editar usuario sin cambiar contraseña.
+2. **DEF-EXP-03** (mayor): permitir editar usuario sin cambiar contraseña.
+3. **DEF-EXP-05** (menor): mensaje correcto al borrar usuario con asistencias (FK).
