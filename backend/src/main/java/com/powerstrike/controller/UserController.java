@@ -2,10 +2,13 @@ package com.powerstrike.controller;
 
 import com.powerstrike.model.User;
 import com.powerstrike.service.UserService;
+import com.powerstrike.validation.OnCreate;
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,13 +31,15 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    // REQ-F01 — Registro de usuarios con nombre, email y DNI (solo ADMIN — DEF-EXP-04)
+    // REQ-F01 — Registro de usuarios con nombre, email y DNI (solo ADMIN — DEF-EXP-04).
+    // Valida el grupo OnCreate (contraseña obligatoria) además del grupo por defecto.
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<User> createUser(@Validated({Default.class, OnCreate.class}) @RequestBody User user) {
         return ResponseEntity.ok(userService.createUser(user));
     }
 
+    // Edición: valida solo el grupo por defecto, por lo que la contraseña es opcional (DEF-EXP-03).
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {

@@ -1,6 +1,7 @@
 package com.powerstrike.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.powerstrike.validation.OnCreate;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -36,7 +37,9 @@ public class User {
     @Column(nullable = false, unique = true)
     private String dni;
 
-    @NotBlank(message = "La contraseña no puede estar vacía")
+    // La contraseña solo es obligatoria al CREAR (grupo OnCreate). En la edición es opcional:
+    // si llega vacía o nula se conserva la actual (DEF-EXP-03). Si llega, debe tener 6+ caracteres.
+    @NotBlank(message = "La contraseña no puede estar vacía", groups = OnCreate.class)
     @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
