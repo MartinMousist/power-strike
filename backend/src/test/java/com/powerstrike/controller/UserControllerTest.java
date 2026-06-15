@@ -257,6 +257,22 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.email").value(VALID_EMAIL));
     }
 
+    // DEF-EXP-03 — editar un usuario sin enviar contraseña debe permitirse (la contraseña
+    // solo es obligatoria al crear). Antes del fix la validación @NotBlank la exigía siempre → 400.
+    @Test
+    void DEFEXP03_updateUserSinPassword_devuelve200() throws Exception {
+        User u = new User(1L, VALID_NAME, VALID_EMAIL, VALID_DNI, VALID_PASSWORD, VALID_ROLE, true);
+        when(userService.updateUser(eq(1L), any())).thenReturn(u);
+
+        String sinPassword = "{\"name\":\"" + VALID_NAME + "\",\"email\":\"" + VALID_EMAIL
+                + "\",\"dni\":\"" + VALID_DNI + "\",\"role\":\"" + VALID_ROLE + "\"}";
+
+        mockMvc.perform(put("/api/users/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(sinPassword))
+                .andExpect(status().isOk());
+    }
+
     @Test
     void deleteUser_devuelve204() throws Exception {
         doNothing().when(userService).deleteUser(1L);
