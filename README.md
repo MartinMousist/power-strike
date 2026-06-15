@@ -175,13 +175,14 @@ Decisiones puntuales registradas también en el informe (`docs/anexos/hito4/Hito
 | Documento | Contenido |
 |---|---|
 | [`docs/Hito_5_PowerStrike.docx`](docs/Hito_5_PowerStrike.docx) / [`.pdf`](docs/Hito_5_PowerStrike.pdf) | Informe completo consolidado (plan de pruebas, RTM, métricas finales, defectos, wireframes, heurístico y reflexión) |
-| [`docs/PowerPoint Hito 5.pptx`](docs/PowerPoint%20Hito%205.pptx) | Presentación de la defensa |
+| [`docs/PowerPoint Hito 5.pptx`](docs/PowerPoint%20Hito%205.pptx) / [`.pdf`](docs/PowerPoint%20Hito%205.pdf) | Presentación de la defensa |
+| [`docs/plan_sqa.md`](docs/plan_sqa.md) / [`.pdf`](docs/plan_sqa.pdf) | Plan SQA actualizado (roles, estándares, umbrales, herramientas, gestión de defectos) |
 
 ### Anexos (material de respaldo, ya integrado en el informe)
 
 | Anexo | Contenido |
 |---|---|
-| [`docs/anexos/secciones-del-informe/`](docs/anexos/secciones-del-informe/) | Secciones del informe en archivos individuales (`.md` + `.pdf`): Plan SQA, RTM, métricas finales, plan de pruebas y defectos, análisis heurístico y reflexión final |
+| [`docs/anexos/secciones-del-informe/`](docs/anexos/secciones-del-informe/) | Secciones del informe en archivos individuales (`.md` + `.pdf`): RTM, métricas finales, plan de pruebas y defectos, análisis heurístico y reflexión final |
 | [`docs/anexos/evidencia/`](docs/anexos/evidencia/) | Evidencia de ejecución: tests, JaCoCo, Checkstyle, PMD, ESLint, LOC, git log y evidencia del Hito 4 |
 | [`docs/anexos/hito4/`](docs/anexos/hito4/) | Entregables del Hito 4 previo (informe y presentación) |
 
@@ -210,9 +211,9 @@ power-strike/
 │       ├── store/            # auth.js (Pinia)
 │       ├── router/           # index.js
 │       └── api/              # axios.js
-├── docs/                     # Entregables Hito 5: informe (docx/pdf) y presentación (pptx)
+├── docs/                     # Entregables Hito 5: informe (docx/pdf), presentación (pptx/pdf), Plan SQA
 │   └── anexos/               # Respaldo (ya dentro del informe):
-│       ├── secciones-del-informe/  # Plan SQA, RTM, métricas, defectos, heurístico, reflexión
+│       ├── secciones-del-informe/  # RTM, métricas, defectos, heurístico, reflexión
 │       ├── evidencia/        # Evidencia de ejecución (tests, JaCoCo, PMD, TDD)
 │       └── hito4/            # Informe y presentación del Hito 4
 ├── .github/workflows/        # ci.yml — pipeline de Integración Continua
