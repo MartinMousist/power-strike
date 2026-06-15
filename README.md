@@ -138,7 +138,7 @@ El backend cuenta con una suite de pruebas automatizadas y verificación de cali
 | Integración continua | Pipeline de GitHub Actions: tests + cobertura en cada push |
 
 La documentación completa del Hito 4 (plan de pruebas, casos, reporte de defectos, FMEA y
-máquina de estados) está en [`docs/Hito_4_PowerStrike.docx`](docs/Hito_4_PowerStrike.docx).
+máquina de estados) está en [`docs/anexos/hito4/Hito_4_PowerStrike.docx`](docs/anexos/hito4/Hito_4_PowerStrike.docx).
 
 ---
 
@@ -166,19 +166,24 @@ máquina de estados) está en [`docs/Hito_4_PowerStrike.docx`](docs/Hito_4_Power
 | **JaCoCo + Checkstyle + PMD + ESLint en CI** | Calidad medible y automática en cada push (GitHub Actions). |
 | **Frontend Vue 3 + Pinia + Vue Router** | SPA reactiva; Pinia para el estado de auth, Router para la navegación por pantallas. |
 
-Decisiones puntuales registradas también en el informe (`docs/Hito_4_PowerStrike.docx`).
+Decisiones puntuales registradas también en el informe (`docs/anexos/hito4/Hito_4_PowerStrike.docx`).
 
 ## Documentación del proyecto (Hito 5)
 
+### Entregables
+
 | Documento | Contenido |
 |---|---|
-| [`docs/plan_sqa.md`](docs/plan_sqa.md) | Plan SQA actualizado con métricas finales |
-| [`docs/hito5/RTM.md`](docs/hito5/RTM.md) | Matriz de trazabilidad requerimiento → código → test |
-| [`docs/hito5/metricas-finales.md`](docs/hito5/metricas-finales.md) | LOC, CC, MI, cobertura, defectos/KLOC |
-| [`docs/hito5/plan-pruebas-defectos.md`](docs/hito5/plan-pruebas-defectos.md) | Plan de pruebas + reporte de defectos |
-| [`docs/hito5/analisis-heuristico.md`](docs/hito5/analisis-heuristico.md) | 10 heurísticas de Nielsen aplicadas |
-| [`docs/hito5/reflexion-final.md`](docs/hito5/reflexion-final.md) | Reflexión final del equipo |
-| [`docs/Hito_4_PowerStrike.docx`](docs/Hito_4_PowerStrike.docx) | Informe completo de testing (Hito 4) |
+| [`docs/Hito_5_PowerStrike.docx`](docs/Hito_5_PowerStrike.docx) / [`.pdf`](docs/Hito_5_PowerStrike.pdf) | Informe completo consolidado (plan de pruebas, RTM, métricas finales, defectos, wireframes, heurístico y reflexión) |
+| [`docs/PowerPoint Hito 5.pptx`](docs/PowerPoint%20Hito%205.pptx) | Presentación de la defensa |
+
+### Anexos (material de respaldo, ya integrado en el informe)
+
+| Anexo | Contenido |
+|---|---|
+| [`docs/anexos/secciones-del-informe/`](docs/anexos/secciones-del-informe/) | Secciones del informe en archivos individuales (`.md` + `.pdf`): Plan SQA, RTM, métricas finales, plan de pruebas y defectos, análisis heurístico y reflexión final |
+| [`docs/anexos/evidencia/`](docs/anexos/evidencia/) | Evidencia de ejecución: tests, JaCoCo, Checkstyle, PMD, ESLint, LOC, git log y evidencia del Hito 4 |
+| [`docs/anexos/hito4/`](docs/anexos/hito4/) | Entregables del Hito 4 previo (informe y presentación) |
 
 ---
 
@@ -205,8 +210,11 @@ power-strike/
 │       ├── store/            # auth.js (Pinia)
 │       ├── router/           # index.js
 │       └── api/              # axios.js
-├── docs/                     # Plan SQA, métricas, informe Hito 4, presentación
-│   └── evidencia/            # Evidencia de ejecución (tests, JaCoCo, PMD, TDD)
+├── docs/                     # Entregables Hito 5: informe (docx/pdf) y presentación (pptx)
+│   └── anexos/               # Respaldo (ya dentro del informe):
+│       ├── secciones-del-informe/  # Plan SQA, RTM, métricas, defectos, heurístico, reflexión
+│       ├── evidencia/        # Evidencia de ejecución (tests, JaCoCo, PMD, TDD)
+│       └── hito4/            # Informe y presentación del Hito 4
 ├── .github/workflows/        # ci.yml — pipeline de Integración Continua
 ├── docker-compose.yml
 └── .env.example
