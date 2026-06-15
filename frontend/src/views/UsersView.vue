@@ -127,9 +127,24 @@ async function saveUser() {
     }
     closeModal()
     fetchUsers()
-  } catch {
-    formError.value = 'Error al guardar. Verificá los datos.'
+  } catch (err) {
+    formError.value = apiError(err, 'Error al guardar. Verificá los datos.')
   }
+}
+
+// Extrae el mensaje real que devuelve el backend (validación, email/DNI duplicado, permisos…).
+function apiError(err, fallback) {
+  const data = err.response?.data
+  if (data?.errors) {
+    return Object.values(data.errors).join(' · ')
+  }
+  if (data?.message) {
+    return data.message
+  }
+  if (err.response?.status === 403) {
+    return 'No tenés permiso para esta acción (necesitás rol Administrador).'
+  }
+  return fallback
 }
 
 async function confirmDelete(id) {

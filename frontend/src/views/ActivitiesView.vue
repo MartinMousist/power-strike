@@ -46,7 +46,17 @@
             </div>
             <div class="form-group">
               <label>Horario</label>
-              <input v-model="form.schedule" placeholder="Ej: 09:00 - 10:00" required />
+              <div class="time-range">
+                <select v-model="startTime" required>
+                  <option value="">Desde</option>
+                  <option v-for="t in horarios" :key="'s' + t">{{ t }}</option>
+                </select>
+                <span class="time-sep">a</span>
+                <select v-model="endTime" required>
+                  <option value="">Hasta</option>
+                  <option v-for="t in horarios" :key="'e' + t">{{ t }}</option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -75,6 +85,15 @@ const formError = ref('')
 const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
 const form = ref({ name: '', day: '', schedule: '', monthlyCost: null })
 
+// Horario en dos selectores (Desde / Hasta) en lugar de texto libre: evita errores de formato.
+const horarios = []
+for (let h = 6; h <= 23; h++) {
+  horarios.push(String(h).padStart(2, '0') + ':00')
+  horarios.push(String(h).padStart(2, '0') + ':30')
+}
+const startTime = ref('')
+const endTime = ref('')
+
 onMounted(fetchActivities)
 
 // REQ-F04 — Mostrar actividades disponibles para consulta
@@ -86,6 +105,8 @@ async function fetchActivities() {
 function openCreate() {
   editingId.value = null
   form.value = { name: '', day: '', schedule: '', monthlyCost: null }
+  startTime.value = ''
+  endTime.value = ''
   formError.value = ''
   showModal.value = true
 }
@@ -98,6 +119,10 @@ function openEdit(activity) {
     schedule: activity.schedule,
     monthlyCost: activity.monthlyCost
   }
+  // Separar "HH:MM - HH:MM" en los dos selectores.
+  const partes = (activity.schedule || '').split('-').map(s => s.trim())
+  startTime.value = partes[0] || ''
+  endTime.value = partes[1] || ''
   formError.value = ''
   showModal.value = true
 }
@@ -110,6 +135,16 @@ function closeModal() {
 // REQ-F03 — Gestión de actividades: crear, editar y visualizar con nombre, día, horario y costo
 async function saveActivity() {
   formError.value = ''
+  // Validación del horario en el frontend (feedback inmediato).
+  if (!startTime.value || !endTime.value) {
+    formError.value = 'Indicá el horario de inicio y de fin.'
+    return
+  }
+  if (endTime.value <= startTime.value) {
+    formError.value = 'El horario de fin debe ser posterior al de inicio.'
+    return
+  }
+  form.value.schedule = `${startTime.value} - ${endTime.value}`
   try {
     if (editingId.value) {
       await api.put(`/activities/${editingId.value}`, form.value)
@@ -118,9 +153,24 @@ async function saveActivity() {
     }
     closeModal()
     fetchActivities()
-  } catch {
-    formError.value = 'Error al guardar la actividad.'
+  } catch (err) {
+    formError.value = apiError(err, 'No se pudo guardar la actividad.')
   }
+}
+
+// Extrae el mensaje real que devuelve el backend (validación, conflicto, permisos…).
+function apiError(err, fallback) {
+  const data = err.response?.data
+  if (data?.errors) {
+    return Object.values(data.errors).join(' · ')
+  }
+  if (data?.message) {
+    return data.message
+  }
+  if (err.response?.status === 403) {
+    return 'No tenés permiso para esta acción (necesitás rol Administrador).'
+  }
+  return fallback
 }
 
 async function confirmDelete(id) {
@@ -159,6 +209,9 @@ h1 { color: #1a1a2e; font-size: 1.8rem; }
 .form-group input, .form-group select { width: 100%; padding: 0.65rem; border: 1.5px solid #e0e0e0; border-radius: 6px; font-size: 0.9rem; }
 .form-group input:focus, .form-group select:focus { outline: none; border-color: #e94560; }
 .form-error { color: #e94560; font-size: 0.88rem; margin-bottom: 1rem; }
+.time-range { display: flex; align-items: center; gap: 0.6rem; }
+.time-range select { flex: 1; }
+.time-sep { color: #888; font-size: 0.85rem; }
 .modal-actions { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem; }
 .btn-cancel { background: white; border: 1.5px solid #ddd; color: #666; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; }
 </style>
