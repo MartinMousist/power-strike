@@ -44,7 +44,7 @@ riesgos de fallos funcionales y baja cobertura.
 | Cobertura global | informativa | 53,0 % | — |
 | Complejidad ciclomática (CC) | ≤ 10 por método | 0 violaciones (máx 3) | Sí |
 | Maintainability Index (MI) | alto | ≈ 85 (estimado) | Sí |
-| Tests automatizados en verde | 100 % | 77/77 | Sí |
+| Tests automatizados en verde | 100 % | 78/78 | Sí |
 | Defectos críticos abiertos al mergear | 0 | 0 | Sí |
 
 Detalle: `docs/hito5/metricas-finales.md`.
@@ -91,5 +91,5 @@ Detalle: `docs/hito5/metricas-finales.md`.
 |---|---|
 | Hito 3 (20/05) | Plan SQA + métricas iniciales |
 | Hito 4 (03/06) | Plan de pruebas, 72 tests, CI, FMEA, reporte de defectos |
-| Sem 6 (06–16/06) | RTM, métricas finales, heurístico, corrección de defectos (77 tests), wireframes, ensayo de defensa |
+| Sem 6 (06–16/06) | RTM, métricas finales, heurístico, corrección de defectos (78 tests), wireframes, ensayo de defensa |
 | 16/06 (19:00) | Entrega final + defensa oral |

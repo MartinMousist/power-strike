@@ -56,7 +56,7 @@ El Volumen de Halstead se estima, ya que la toolchain actual (PMD y JaCoCo) no l
 
 La cobertura es del 100 % en los módulos principales (controller, service, model), superando el umbral del Plan SQA (≥ 60 % en código nuevo). El 53 % global se explica por el paquete security/ y la configuración de arranque, fuera del alcance del testing funcional.
 
-Tests: 77 (0 fallos, 0 errores).
+Tests: 78 (0 fallos, 0 errores).
 
 ## 5. Densidad de defectos (defectos/KLOC)
 
@@ -74,7 +74,7 @@ Una densidad alta en este caso refleja un testing exhaustivo (se buscaron defect
 
 | Métrica | Hito 3 | Hito 4 | Hito 5 |
 |---|---:|---:|---:|
-| Tests automatizados | 21 | 72 | 77 |
+| Tests automatizados | 21 | 72 | 78 |
 | Cobertura global | 28,3 % | 53,0 % | 53,0 % |
 | Cobertura módulos principales | parcial | 100 % | 100 % |
 | Defectos documentados | 0 | 6 | 12 |
@@ -87,5 +87,5 @@ Una densidad alta en este caso refleja un testing exhaustivo (se buscaron defect
 |---|---|---|:---:|
 | Cobertura módulos principales | ≥ 60 % | 100 % | Sí |
 | Complejidad ciclomática | CC ≤ 10 | 0 violaciones | Sí |
-| Tests en verde | 100 % | 77/77 | Sí |
+| Tests en verde | 100 % | 78/78 | Sí |
 | Defectos críticos abiertos | 0 al mergear | 0 | Sí |

@@ -6,7 +6,7 @@ A lo largo del trabajo de campo migramos un sistema de gestión de gimnasio a un
 (Java + Spring Boot en el backend, Vue 3 en el frontend) y, sobre todo, incorporamos una cultura de
 calidad que al principio no teníamos:
 
-- Testing como parte del desarrollo, no como un agregado. Pasamos de 21 a 77 tests automatizados y
+- Testing como parte del desarrollo, no como un agregado. Pasamos de 21 a 78 tests automatizados y
   aplicamos TDD (Red-Green-Refactor) sobre funcionalidades nuevas: escribir el test primero nos
   obligó a pensar el caso de uso antes que el código.
 - Técnicas de diseño de casos. Aprendimos a justificar cada test con una técnica (partición de
